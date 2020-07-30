@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings
+	xmlns="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm 
+	http://java.sun.com/xml/ns/persistence/orm_2_1.xsd"
+	version="2.1">
+
+	<sql-result-set-mapping name="userEntity">
+		<constructor-result
+			target-class="com.codeenginestudio.elearning.dao.entity.UserEntity">
+			<column name="userid" class="java.lang.Long" />
+			<column name="username" class="java.lang.String" />
+			<column name="password" class="java.lang.String" />
+			<column name="firstname" class="java.lang.String" />
+			<column name="lastname" class="java.lang.String" />
+			<column name="email" class="java.lang.String" />
+			<column name="gender" class="java.lang.String" />
+			<column name="enabled" class="java.lang.Boolean" />
+		</constructor-result>
+	</sql-result-set-mapping>
+
+	<named-native-query name="UserEntity.getUserByRole"
+		result-set-mapping="userEntity">
+		<query>
+			<![CDATA[
+				SELECT
+					u.userid AS userid,
+					u.username AS username,
+					u.password AS password,
+					u.firstname AS firstname,
+					u.lastname AS lastname,
+					u.email AS email,
+					u.gender AS gender,
+					u.enabled AS enabled,
+					u.roleid AS roleid
+				FROM users u
+				WHERE (u.roleid = :roleid OR 0 = :roleid)
+				LIMIT :limit
+				OFFSET :offset
+			]]>
+		</query>
+	</named-native-query>
+
+</entity-mappings>
