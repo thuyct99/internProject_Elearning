@@ -1,27 +1,31 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <head>
 	<meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
 
-    <title>ELearning - Math for Kid</title>
+	<title><spring:message code="teacher-elearning-math-for-kid"/></title>
 
 	<!-- Bootstrap core CSS-->
-	<link href="<c:url value="/css/bootstrap.min.css"/>" rel="stylesheet" type="text/css">
+	<link href="<c:url value="/vendor/bootstrap/css/bootstrap.min.css"/>" rel="stylesheet">
 
- 	<!-- Page level plugin CSS-->
-    <link href="<c:url value="/css/datatables/dataTables.bootstrap4.css"/>" rel="stylesheet"  type="text/css">
-    <link href="<c:url value="/css/bootoast/bootoast.min.css"/>" rel="stylesheet" type="text/css">
-    <!-- Custom fonts for this template-->
-	<link href="//netdna.bootstrapcdn.com/font-awesome/5.5.0/css/font-awesome.css" rel="stylesheet" />
+	<!-- Custom fonts for this template-->
+	<link href="<c:url value="/vendor/fontawesome-free/css/all.min.css"/>" rel="stylesheet" type="text/css">
+
+	 <!-- Page level plugin CSS-->
+	<link href="<c:url value="/vendor/datatables/dataTables.bootstrap4.css"/>" rel="stylesheet">
+	<link href="<c:url value="/vendor/bootoast/bootoast.min.css"/>" rel="stylesheet">
+
 	<!-- Custom styles for this template-->
 	<link href="<c:url value="/css/custom.css"/>" rel="stylesheet" type="text/css">
+	<link href="<c:url value="/css/top_title.css"/>" rel="stylesheet" type="text/css">
 
-	<script	src="<c:url value="/js/jquery/jquery.min.3.5.1.js"/>"></script>
-	<script	src="<c:url value="/js/bootstrap/bootstrap.bundle.4.5.0.js"/>"></script>
-	<script	src="<c:url value="/js/bootoast/bootoast.min.js"/>"></script>
-
+	<script type="text/javascript" src="<c:url value="/vendor/jquery/jquery.min.js"/>"></script>
+	<script type="text/javascript" src="<c:url value="/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
+	<script type="text/javascript" src="<c:url value="/vendor/bootoast/bootoast.min.js"/>"></script>
 </head>

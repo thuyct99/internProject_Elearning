@@ -1,35 +1,46 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.codeenginestudio.elearning.util.SecurityUtil" %>
-<!-- Custom styles for this template-->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <nav class="navbar border-bottom navbar-expand">
 	<div class="navbar-top-right col-sm-4">
 
 		<div class="brand-top-right col-sm-4">
-			<img class="logo-right"
-				style="max-width: 32; vertical-align: middle;"
-				src="https://interactive-examples.mdn.mozilla.net/media/examples/grapefruit-slice-332-332.jpg">
-			<h6 class="brand-name grey">Intern App</h6>
+			<img class="logo-right" src="<c:url value="/images/logo.jpg"/>">
+			<h6 class="brand-name white"><spring:message code="intern-app"/></h6>
 		</div>
-
 		<div class="col-sm-8 navbar-top-right">
-			<a class="navbar-custom"
-				href="<c:url value="/admin/user"/>"> <button class="grey tablink" >Users</button> </a> 
-			<a class="navbar-custom"
-				href="<c:url value="/admin/class"/>"> <button class="grey tablink" >Classes</button> </a>
+			<a id="users" class="navbar-brand white tab-link" href="<c:url value="/admin/user"/>">
+				<spring:message code="users"/>
+			</a>
+			<a id="class" class="navbar-brand white tab-link" href="<c:url value="/admin/class"/>">
+				<spring:message code="classes"/>
+			</a>
 		</div>
 	</div>
 
 	<ul class="navbar-nav ml-auto ml-md-0"
 		style="position: absolute; right: 20px; color: white;">
 
-		<li class="nav-item dropdown"><a
-			class="nav-link dropdown-toggle grey capitalize" href="#" id="userDropdown"
-			role="button" data-toggle="dropdown" aria-haspopup="true"
-			aria-expanded="false">${SecurityUtil.getUserPrincipal().getUsername()} </a>
-			<div class="dropdown-menu dropdown-menu-right"
-				aria-labelledby="userDropdown">
-				<a class="dropdown-item" href="/logout">Logout</a>
-			</div></li>
+		<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle white capitalize" href="#" id="userDropdown"
+				role="button" data-toggle="dropdown" aria-haspopup="true"
+				aria-expanded="false">
+					${SecurityUtil.getUserPrincipal().getUsername()}
+			</a>
+			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+				<a class="dropdown-item" href="/logout"><spring:message code="logout"/></a>
+			</div>
+		</li>
 	</ul>
 </nav>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var url = window.location.href;
+		if (url.includes("user")) {
+			$("#users").css("border-bottom", "4px solid red");
+		} else {
+			$("#class").css("border-bottom", "4px solid red");
+		}
+	});
+</script>

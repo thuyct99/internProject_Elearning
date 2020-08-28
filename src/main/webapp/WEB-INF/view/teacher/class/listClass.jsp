@@ -2,57 +2,41 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="WEB-INF/taglibs/util.tld" prefix="util"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <!DOCTYPE html>
 <html>
 <body>
+	<br><br><br>
 	<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm-7">
-
-			</div>
-		</div>
-	</div>
-	<br>
-	<br>
-	<div class="container-fluid">
-		<div class="row">
-			<table class="table table-bordered table-hover">
-				<thead>
+		<table class="table table-bordered table-hover">
+			<thead>
+				<tr>
+					<th scope="col"><spring:message code=".NO"/></th>
+					<th scope="col"><spring:message code="class-name"/></th>
+					<th scope="col"><spring:message code="teacher-name"/></th>
+					<th scope="col"><spring:message code="status"/></th>
+					<th scope="col"><spring:message code="total-student"/></th>
+					<th scope="col"><spring:message code="action"/></th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${classPage}" var="class" varStatus="status">
 					<tr>
-						<th scope="col">#</th>
-						<th scope="col">Class Name</th>
-						<th scope="col">Teacher</th>
-						<th scope="col">Status</th>
-						<th scope="col">Total Student</th>
-						<th scope="col">Actions</th>
+						<td>${status.index + 1}</td>
+						<td>${class.classname}</td>
+						<td>${class.getUser().getUsername()}</td>
+						<td>${class.getStatus() == true ? 'Active' : 'Inactive'}</td>
+						<td class="pink-highlight">${class.totalStudents}</td>
+						<td>
+							<a href="/teacher/getStudentInClass?classid=<c:out value='${class.classid}'/>">
+								<input class="btn btn-pink" value="View Students In Class">
+							</a>
+						</td>
 					</tr>
-				</thead>
-				<tbody>
-					<c:set var="i" value="1" />
-					<c:forEach items="${classPage.getContent()}" var="class">
-						<tr>
-							<td>${i}</td>
-							<td>${class.classname}</td>
-							<td>${class.getUser().getUsername()}</td>
-							<td>${class.getStatus() == true ? 'Active' : 'Inactive'}</td>
-							<td>${class.totalStudents}</td>
-							<td>
-								<a href="/teacher/getStudentInClass?classid=<c:out value='${class.classid}'/>"><button
-										class="btn btn-dark">View Students In Class</button></a>
-							</td>
-
-						</tr>
-						<c:set var="i" value="${i+1}" />
-					</c:forEach>
-
-				</tbody>
-			</table>
-		
-		</div>
+				</c:forEach>
+			</tbody>
+		</table>
 	</div>
-	<util:pagination count="${classPage.getTotalElements()}"
-		totalPages="${classPage.getTotalPages()}"
-		url="${pageContext.request.contextPath}/admin/class"
-		curpage="${classPage.getNumber()}" />
 </body>
 </html>

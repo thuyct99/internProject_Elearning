@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="WEB-INF/taglibs/util.tld" prefix="util"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,50 +9,61 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/fontawesome.min.css">
 </head>
-<%
-	String deleteImageAddress = "https://img.icons8.com/cotton/2x/delete-sign--v2.png";
-	String editImageAddress = "https://img.icons8.com/cotton/2x/edit.png";
-%>
 <body>
-	<div class="container-fluid">
+	<div class="container-fluid mg-top-2">
+		<div class="row display-center">
+			<h1 class="name-class">&nbsp; ${assessment.getAssessmentname()}</h1>
+		</div>
+		
 		<div class="row">
-			<div class="col-sm-7">
-				<h5> Class Name: ${class.getClassname()} ${classNull} </h5> 
-				<h5> Assessment Name: ${assessment.getAssessmentname()}</h5>
-				<h5>( ${assessment.getStartdate()} - ${assessment.getExpireddate()})</h5>
-				<div class="alert success" style="display:none">
-					<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-					<strong id="message">${messageSuccess}</strong>
+			<div class="col-sm-1" ></div>
+			<div class="col-sm-6">
+				<div class="row mt-2">
+					<h5 class="pl-3"><spring:message code="class"/></h5>
+					<h5 class="name-class">&nbsp; ${class.getClassname()} ${classNull}</h5>
 				</div>
 			</div>
-			<div class="col-sm-5">
-				<div class="row">
-					<div class="col-sm-8">
-
-					</div>
-					<div class="col-sm-4 justify-end">
-						<a href='/teacher/questionOfAssessment/addQuestionOfAssessment/${assessment.assessmentid}'>
-							<button class="btn btn-dark" type="button">Add new question</button>
-						</a>		
-						<a href='/teacher/assessment/preview/${assessment.assessmentid}' class="preview">
-							<button class="btn btn-dark" type="button">Preview</button>
-						</a>
-					</div>
-				</div>
+			<div class="col-sm-5 justify-right">
+				<h6 class="pl-3">
+					<spring:message code="start-date-x" arguments="${assessment.getStartdate()}" htmlEscape="false" />
+				</h6>
+				<h6>
+					<spring:message code="expired-date-x" arguments="${assessment.getExpireddate()}" htmlEscape="false" />
+				</h6>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-sm-1"></div>
+			<div class="col-sm-3">
+				<a href='/teacher/assessment'>
+					<button class="btn btn-warning medium-btn" type="button"><spring:message code="cancel"/></button>
+				</a>
+			</div>
+			<div class="col-sm-2"></div>
+			<div class="col-sm-6 ">
+				<a href='/teacher/questionOfAssessment/addQuestionOfAssessment/${assessment.assessmentid}' class="add-question">
+					<button class="btn btn-pink medium-btn" type="button"><spring:message code="add-new-question"/></button>
+				</a>		
+				<a href='/teacher/assessment/preview/${assessment.assessmentid}' class="preview">
+					<button class="btn btn-warning medium-btn" type="button"><spring:message code="preview"/></button>
+				</a>
 			</div>
 		</div>
 	</div>
 	<br><br>
-	<div>
+	<div class="container-fluid">
 		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<th scope="col">Numerical Order</th>
-					<th scope="col">Question Type</th>
-					<th scope="col">Content</th>
-					<th scope="col">Correct Answer</th>
-					<th scope="col">Score</th>
-					<th scope="col">Options</th>
+					<th scope="col"><spring:message code="numerical-order"/></th>
+					<th scope="col"><spring:message code="question-type"/></th>
+					<th scope="col"><spring:message code="content"/></th>
+					<th scope="col"><spring:message code="correct-answer"/></th>
+					<th scope="col"><spring:message code="score"/></th>
+					<c:if test="${assessment.getStatus()}">
+						<th scope="col"><spring:message code="options"/></th>
+					</c:if>
 				</tr>
 			</thead>
 			<tbody>
@@ -65,10 +77,10 @@
 						<td>${question.score}</td>
 						<td>
 							<a href="/teacher/questionOfAssessment/editQuestionOfAssessment/${assessment.assessmentid}/${question.questionid}">
-									<img alt="edit" src="<%=editImageAddress%>" /> </a> 
-									<%-- --%>
+									<img alt="edit" src="<c:url value="../../images/edit.png"/>" /> 
+							</a> 
 							<a href="#" onclick="confirmation('/teacher/questionOfAssessment/deleteQuestionOfAssessment/${assessment.assessmentid}/${question.questionid}', 'delete')"> 
-								<img alt="delete" src="<%=deleteImageAddress%>" />
+								<img alt="delete" src="<c:url value="../../images/delete.png"/>" />
 							</a>
 						</td>
 					</tr>
@@ -81,42 +93,7 @@
 			url="${pageContext.request.contextPath}/teacher/questionOfAssignment"
 			curpage="${listQuestionOfAssignment.getNumber()}" />
 	</div>
-	
-	<div id="confirm" class="modal">
-	  
-	  <form class="modal-content">
-	    <div class="container-model">
-	    	<span onclick="document.getElementById('confirm').style.display='none'" class="close" title="Close Modal">&times;</span>
-	      <h1 id="title"></h1>
-	      <p id="ask"></p>
-	
-	      <div class="clearfix">
-	        <a id="cancelConfirm" href="#" onclick="document.getElementById('confirm').style.display='none'"><button type="button" class="btn cancelbtn">No</button></a>
-	        <a id="acceptConfirm" href="#"> <button type="button" class="btn-dark btn acceptbtn">Yes</button></a>
-	      </div>
-	    </div>
-	  </form>
-	</div>
-	<script type="text/javascript">
-	
-		$(document).ready(function() {
-			$('#confirm').hide();
-			
-			if($('#message').html() != ""){
-				$('.alert').css("display", "block");
-				setTimeout(function(){ $('.alert').css("display", "none"); }, 1000);
-			}
-		});
 
-		function confirmation(success, action) {
-			
-			$('#acceptConfirm').attr("href", success);
-			$('#title').html(action + ' Item');
-			$('#ask').html('Are you sure you want to ' + action + ' this Item ?');
-			$('#confirm').show();
-		}
-	</script>
 </body>
 </html>
-
 
