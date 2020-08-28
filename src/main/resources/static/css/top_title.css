@@ -3,8 +3,8 @@
 	margin: 5% 10% 5% 5%;
 }
 
-.grey {
-	color: #5d5d5d;
+.white {
+	color: white;
 }
 
 .brand-name {
@@ -17,32 +17,34 @@
 	padding-bottom: 0px;
 	padding-top: 0px;
 	height: 56px;
-	margin-bottom: 2%;
+	background: black;
 }
 
 .navbar-top-right {
 	display: flex;
 	flex-wrap: nowrap;
 	cursor: pointer;
+	height: 100%;
 }
 
 .brand-top-right {
 	display: flex;
 	flex-wrap: nowrap;
+	margin-top: 7px;
 }
 
 .tab-link {
 	cursor: pointer;
 	font-weight: bold;
-	padding-top: 5%;
+	padding-top: 4%;
 	width: 50%;
 	margin: 0px;
-	padding-left: 10%;
+	text-align: center;
 }
 
 .tab-link:hover {
 	transition: 1s;
-	background-color: #e2e2e2de;
-	color: #040404de;
-	border-bottom: 4px solid black;
+	background-color: black;
+	color: white;
+	border-bottom: 4px solid red;
 }

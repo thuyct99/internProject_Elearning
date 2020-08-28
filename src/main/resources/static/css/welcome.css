@@ -1,0 +1,30 @@
+.headerWelcome {
+	overflow: hidden;
+	height: 100px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 150px;
+	font-size: 75px;
+	color: #FE2E64;
+	margin-top: 30px;
+}
+
+.welcomeImg {
+	width: 66%;
+	background-position: center;
+	background-size: cover;
+	position: relative;
+	margin-left: 17%;
+}
+
+#bt-continue {
+	display: inline-block;
+	margin-left: 42%;
+	margin-top: 16%;
+	font-size: 27px;
+}
+
+.btn-pink {
+	background: #FE2E64;
+	color: white;
+}
