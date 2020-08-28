@@ -5,6 +5,15 @@ div.dataTables_paginate ul.pagination {
 	justify-content: flex-end;
 }
 
+.welcomeImg {
+	width: 66%;
+	background-position: center;
+	background-size: cover;
+	position: relative;
+	margin-left: 17%;
+	height: 230px;
+}
+
 img {
 	width: 30px;
 	height: 30px;
@@ -15,7 +24,18 @@ img {
 	color: red
 }
 
+.btn-default {
+	background: #ccc;
+	color: black;
+}
+
 .optionItem {
+	display: flex;
+	flex-flow: row;
+	margin: 0 5px;
+}
+
+.block-question-type .optionItem {
 	display: flex;
 	flex-flow: row;
 	margin: 5px;
@@ -25,63 +45,82 @@ img {
 	margin-top: 2%;
 }
 
-.inputRadioOption {
-	margin-top: 12px;
+.answer-group {
+	display: flex;
+	justify-content: flex-start;
+	height: 100%;
+	max-height: 45px;
+	align-content: center;
+	align-items: center;
+	margin: 3px 0;
+}
+
+.answer-group * {
+	margin-right: 5px;
+}
+
+.answer-item {
+	display: block;
+	position: relative;
+	padding-left: 35px;
+	margin-bottom: 12px;
+	cursor: pointer;
+	font-size: 17px;
+	user-select: none;
+}
+
+.answer-item input {
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+	width: 100%;
+	left: 0;
+	height: 100%;
+	z-index: 9999;
+}
+
+.radio-btn {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 25px;
+	width: 25px;
+	background-color: #eee;
+	border-radius: 50%;
+	border: 0.5px solid #e2d9d9;
+}
+
+.answer-item input:checked ~ .radio-btn {
+	background-color: #2196f3;
+}
+
+.radio-btn:after {
+	content: "";
+	position: absolute;
+	display: none;
+}
+
+.answer-item input:checked ~ .radio-btn:after {
+	display: block;
+}
+
+.answer-item .radio-btn:after {
+	top: 7px;
+	left: 8px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: white;
 }
 
 .optionName {
 	margin-top: 7px;
 }
 
-.logo-right {
-	border-radius: 50px;
-	margin: 8% 10% 5% 5%;
-}
-
-.grey {
-	color: #5d5d5d;
-}
-
-.brand-name {
-	font-size: 20px;
-	font-weight: bold;
-	padding-top: 11%;
-}
-
-.navbar {
-	padding-bottom: 0px;
-	padding-top: 0px;
-	height: 56px;
-	margin-bottom: 2%;
-}
-
-.navbar-top-right {
-	display: flex;
-	flex-wrap: nowrap;
-	cursor: pointer;
-}
-
-.brand-top-right {
-	display: flex;
-	flex-wrap: nowrap;
-}
-
-.tablink {
+.yesnoImage {
+	width: 50px;
+	height: 50px;
 	background-color: #fff;
-	float: left;
-	border: none;
-	outline: none;
-	cursor: pointer;
-	padding: 14px 16px;
-	font-size: 17px;
-	width: 122%;
-	font-weight: bold;
-}
-
-.tablink:hover {
-	transition: 1s;
-	background-color: #e2e2e2de;
-	color: #040404de;
 }
 
 .sticky-footer {
@@ -91,6 +130,7 @@ img {
 	width: 100%;
 	text-align: center;
 	color: black;
+	font-weight: bold;
 }
 
 #pagination {
@@ -125,6 +165,8 @@ img {
 .descriptionAssessment {
 	text-align: center;
 	font-weight: bold;
+	display:flex;
+	justify-content: space-between;
 }
 
 .assignmentTitle {
@@ -236,14 +278,21 @@ img {
 	color: #B43104;
 }
 
-/* User List CSS*/
 .btn-dark {
 	background-color: #585858;
 	color: #ffffff;
 }
 
 .preview {
-	margin-left: 2%;
+	margin-left: 3%;
+}
+
+.mg-left-10 {
+	margin-left: 10%;
+}
+
+.mg-right-6 {
+	margin-right: 6%;
 }
 
 .navbar-custom {
@@ -257,8 +306,8 @@ img {
 }
 
 .row-grey {
-	background-color: #585858;
-	color: #ffffff;
+	background-color: #ffc107;
+	color: white;
 }
 
 .checkedRow:hover {
@@ -291,6 +340,7 @@ img {
 .error {
 	display: flex;
 	justify-content: start;
+	color: red;
 }
 
 .form-title {
@@ -300,6 +350,7 @@ img {
 .justify-end {
 	display: flex;
 	justify-content: flex-end;
+	margin-top: 20%;
 }
 
 #pagination {
@@ -316,4 +367,222 @@ img {
 
 .tablink:active {
 	color: red;
+}
+
+.btn-active {
+	background: #8000FF;
+}
+
+.btn-inactive {
+	background: #D8CEF6;
+}
+
+.pink-highlight {
+	color: #DF01A5;
+}
+
+.btn-pink {
+	background: #FE2E64;
+	color: white;
+}
+
+.checkboxChecked {
+	color: #777;
+}
+
+.pd-10 {
+	padding-top: 10%;
+}
+
+.display-inline {
+	display: flex;
+}
+
+.radius-5 {
+	border-radius: 5%;
+}
+
+.hide_block {
+	display: none;
+}
+
+.flex-container {
+	display: flex;
+	justify-content: center;
+}
+
+.flex-around {
+	display: flex;
+	justify-content: space-around;
+}
+
+.logo-right {
+	max-width: 32;
+	vertical-align: middle;
+}
+
+#wrapper {
+	background-image: url("../images/background.jpg");
+}
+
+#content-wrapper {
+	margin: auto;
+	background-color: white;
+}
+
+#userDropdown {
+	width: 140px;
+}
+
+.button-display-right{
+	margin-left: -29px;
+}
+
+.display-center{
+	display: flex;
+	justify-content: center;
+}
+
+.position-radio {
+	margin-top: 5px;
+	margin-left: -26px;
+}
+
+.answer-choice-postion {
+	margin-left: -15px;
+}
+
+.mg-top-2 {
+	margin-top: 2%;
+}
+
+.addOptionDiv {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.large-btn {
+	width: 250px;
+}
+
+.table-mg-top-8 {
+	margin-top: 8%;
+}
+
+.title-class {
+	padding-left: 5%;
+}
+
+.name-class {
+	font-weight: bold;
+}
+
+.container-fluid {
+	padding: 0px;
+}
+
+.footer-copyright {
+	color: white;
+}
+
+.radio-none {
+	display: none;
+}
+
+.btn-action {
+	border-radius: 50%;
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	font-size: 12px;
+}
+
+.question-numerical {
+	text-align: right;
+	padding: 0;
+}
+
+.question-content {
+	font-weight: bold;
+	font-size: 16px;
+	margin-bottom: 0.5em;
+}
+
+.button-row {
+	padding: 2em;
+	text-align: right;
+	width: 50px;
+	height: 50px;
+	font-size: 20px;
+}
+
+.optionActive {
+	border: 2px solid #17a2b8;
+	border-radius: 50%;
+}
+
+.checkCorrect {
+	border: 2px solid #17a2b8;
+	border-radius: 50%;
+}
+
+.checkInCorrect {
+	border: 2px solid red;
+	border-radius: 50%;
+}
+
+.multiple-incorrect {
+	background-color: red !important;
+}
+
+.multiple-correct {
+	background-color: #2196f3 !important;
+}
+
+.border-preview{
+	border: 1px solid black;
+    padding: 0% 7% 6% 7%;
+    margin: 7% 0% 7% 0%;
+    border-radius: 2%;
+    border-top-style: hidden;
+}
+
+.title-preview{
+	margin-top: -6%;
+}
+
+.dateTime{
+	margin-top: -10%;
+}
+
+.questionName{
+	margin: 2%;
+}
+
+.ml{
+	margin-left: 8px;
+}
+
+.seperate-question{
+	border-bottom-style: dashed;
+    padding-bottom: 2%;
+}
+
+.justify-right{
+	display: grid;
+    justify-content: space-around;
+}
+
+.medium-btn {
+	width: 160px;
+}
+
+.add-question{
+	margin-left: 16%;
+}
+
+.image-preview{
+	width: 120px;
+    height: 100px;
+    margin-top: -42%;
 }
