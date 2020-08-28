@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
+import com.codeenginestudio.elearning.constant.EmailConstant;
+
 @Configuration
 public class EmailConfig {
 	@Bean
@@ -15,8 +17,8 @@ public class EmailConfig {
 		mailSender.setHost("smtp.gmail.com");
 		mailSender.setPort(587);
 
-		mailSender.setUsername(MyConstants.MY_EMAIL);
-		mailSender.setPassword(MyConstants.MY_PASSWORD);
+		mailSender.setUsername(EmailConstant.MY_EMAIL);
+		mailSender.setPassword(EmailConstant.MY_PASSWORD);
 
 		Properties props = mailSender.getJavaMailProperties();
 		props.put("mail.transport.protocol", "smtp");

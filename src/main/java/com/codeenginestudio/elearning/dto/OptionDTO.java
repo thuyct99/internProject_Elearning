@@ -24,13 +24,11 @@ public class OptionDTO {
 		this.name = name;
 	}
 
-	public String getOptionValue() {
+	public String getValue() {
 		return value;
 	}
 
-	public void setOptionValue(String value) {
+	public void setValue(String value) {
 		this.value = value;
 	}
-	
-	
 }

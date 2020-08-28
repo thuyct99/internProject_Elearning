@@ -15,10 +15,14 @@ public class QuestionTypeEntity {
 	@Column(name = "questiontypename")
 	private String questionTypeName;
 
-	public QuestionTypeEntity(Long questionTypeId, String questionTypeName) {
+	@Column(name="questiontypecode")
+	private String questionTypeCode;
+
+	public QuestionTypeEntity(Long questionTypeId, String questionTypeName, String questionTypeCode) {
 		super();
 		this.questionTypeId = questionTypeId;
 		this.questionTypeName = questionTypeName;
+		this.questionTypeCode = questionTypeCode;
 	}
 
 	public QuestionTypeEntity() {
@@ -40,4 +44,13 @@ public class QuestionTypeEntity {
 	public void setQuestionTypeName(String questionTypeName) {
 		this.questionTypeName = questionTypeName;
 	}
+
+	public String getQuestionTypeCode() {
+		return questionTypeCode;
+	}
+
+	public void setQuestionTypeCode(String questionTypeCode) {
+		this.questionTypeCode = questionTypeCode;
+	}
+
 }

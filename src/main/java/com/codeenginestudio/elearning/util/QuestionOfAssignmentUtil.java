@@ -31,12 +31,15 @@ public class QuestionOfAssignmentUtil {
 	}
 
 	public static List<QuestionOfAssessmentDTO> parseToObject(String jsongString) {
+
 		List<QuestionOfAssessmentDTO> questionDTOs = new ArrayList<>();
 
 		try {
+
 			questionDTOs = mapper.readValue(jsongString,
 					mapper.getTypeFactory().constructCollectionType(List.class, QuestionOfAssessmentDTO.class));
 		} catch (IOException e) {
+
 			e.printStackTrace();
 		}
 

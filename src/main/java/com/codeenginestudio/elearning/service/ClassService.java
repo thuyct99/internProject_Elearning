@@ -8,9 +8,11 @@ import com.codeenginestudio.elearning.dto.ClassDTO;
 
 public interface ClassService {
 
+	void editStatusClass(Long classid);
+
 	void deleteClass(Long id);
 
-	void editStatusClass(Long classid);
+	void deleteClassByTeacherId(Long teacherId);
 
 	void saveAddClass(ClassDTO classDTO);
 
@@ -18,12 +20,13 @@ public interface ClassService {
 
 	ClassDTO getClassByClassid(Long classid);
 
+	List<Long> getListIdByStatus(boolean status);
+
 	List<ClassDTO> getAllClass();
 
 	List<ClassDTO> getClassByTeacherId(Long teacherId);
 
-	Page<ClassDTO> getClassPageByTeacherId(Integer page, Long teacherId);
-
 	Page<ClassDTO> getClassPage(Integer page);
 
+	Page<ClassDTO> getClassPageByTeacherId(Integer page, Long teacherId);
 }

@@ -9,12 +9,14 @@ public class QuestionTypeUtil {
 	public static QuestionTypeDTO parseToQuestionTypeDTO(QuestionTypeEntity questionTypeEntity) {
 
 		QuestionTypeDTO questionTypeDTO = UtilGeneral.modelMapper.map(questionTypeEntity, QuestionTypeDTO.class);
+
 		return questionTypeDTO;
 	}
 
 	public static QuestionTypeEntity parseToQuestionTypeEntity(QuestionTypeDTO questionTypeDTO) {
 
 		QuestionTypeEntity questionTypeEntity = UtilGeneral.modelMapper.map(questionTypeDTO, QuestionTypeEntity.class);
+
 		return questionTypeEntity;
 	}
 }

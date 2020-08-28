@@ -10,10 +10,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.codeenginestudio.elearning.constant.Constant;
+import com.codeenginestudio.elearning.constant.RoleConstant;
+import com.codeenginestudio.elearning.dao.ClassDAO;
 import com.codeenginestudio.elearning.dao.RoleDAO;
 import com.codeenginestudio.elearning.dao.UserDAO;
+import com.codeenginestudio.elearning.dao.entity.ClassEntity;
 import com.codeenginestudio.elearning.dao.entity.UserEntity;
 import com.codeenginestudio.elearning.dto.UserDTO;
+import com.codeenginestudio.elearning.service.ClassService;
+import com.codeenginestudio.elearning.service.StudentInClassService;
 import com.codeenginestudio.elearning.service.UserService;
 import com.codeenginestudio.elearning.util.CommonUtil;
 import com.codeenginestudio.elearning.util.PasswordUtil;
@@ -28,11 +33,24 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private RoleDAO roleDAO;
 
+	@Autowired
+	private ClassDAO classDAO;
+
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private StudentInClassService studentInClassService;
+
+	@Autowired
+	private ClassService classService;
+
 	@Override
 	public Page<UserDTO> getUserPage(Integer page) {
 
 		Pageable pageable = PageRequest.of(CommonUtil.getInt(page), Constant.ITEM_PER_PAGE);
 		Page<UserEntity> listUserEntity = userDAO.findAll(pageable);
+
 		return listUserEntity.map(x -> (UserUtil.parseToUserDTO(x)));
 	}
 
@@ -55,6 +73,19 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void deleteUser(long userId) {
+
+		UserDTO userDTO = userService.getUserByUserId(userId);
+
+		if (userDTO.getRole().getRoleid() == 2) {
+
+			classService.deleteClassByTeacherId(userId);
+
+		} else if (userDTO.getRole().getRoleid() == 3) {
+
+			studentInClassService.deleteStudentInClass(userId);
+
+		}
+
 		userDAO.deleteById(userId);
 	}
 
@@ -80,6 +111,21 @@ public class UserServiceImpl implements UserService {
 
 		UserEntity userEntity = userDAO.getOne(userId);
 		userEntity.setEnabled(!userEntity.isEnabled());
+
+		if (userEntity.isEnabled() == false) {
+
+			List<ClassEntity> listClasses = classDAO.findAll();
+			List<Long> listUsers = getUserIdByRoleAndStatus(RoleConstant.TEACHER, true);
+
+			for (ClassEntity classEntity : listClasses) {
+
+				if (!listUsers.contains(classEntity.getUser().getUserid())) {
+
+					classEntity.setStatus(false);
+				}
+			}
+		}
+
 		userDAO.saveAndFlush(userEntity);
 	}
 
@@ -89,6 +135,7 @@ public class UserServiceImpl implements UserService {
 		List<UserDTO> listUserDTOs = new ArrayList<>();
 
 		for (UserEntity userEntity : userDAO.findByUsername(username)) {
+
 			listUserDTOs.add(UserUtil.parseToUserDTO(userEntity));
 		}
 
@@ -101,6 +148,7 @@ public class UserServiceImpl implements UserService {
 		List<UserDTO> listUserDTOs = new ArrayList<>();
 
 		for (UserEntity userEntity : userDAO.findByEmail(email)) {
+
 			listUserDTOs.add(UserUtil.parseToUserDTO(userEntity));
 		}
 
@@ -120,17 +168,34 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserDTO> getUserByRole(String roleName) {
+	public List<UserDTO> getUserByRoleAndStatus(String roleName, Boolean status) {
 
 		List<UserEntity> listUserEntity = userDAO.findAll();
 		List<UserDTO> listUserDTO = new ArrayList<>();
 
 		for (UserEntity userEntity : listUserEntity) {
-			if (userEntity.getRole().getRolename().equals(roleName)) {
+
+			if (userEntity.getRole().getRolename().equals(roleName) && userEntity.isEnabled().equals(status)) {
 				listUserDTO.add(UserUtil.parseToUserDTO(userEntity));
 			}
 		}
 
 		return listUserDTO;
+	}
+
+	@Override
+	public List<Long> getUserIdByRoleAndStatus(String roleName, boolean status) {
+
+		List<UserEntity> listUserEntity = userDAO.findAll();
+		List<Long> listUserId = new ArrayList<>();
+
+		for (UserEntity userEntity : listUserEntity) {
+
+			if (userEntity.getRole().getRolename().equals(roleName) && userEntity.isEnabled().equals(status)) {
+				listUserId.add(userEntity.getUserid());
+			}
+		}
+
+		return listUserId;
 	}
 }

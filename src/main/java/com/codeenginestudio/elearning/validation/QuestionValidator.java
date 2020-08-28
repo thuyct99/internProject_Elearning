@@ -1,14 +1,13 @@
 package com.codeenginestudio.elearning.validation;
 
 import org.springframework.util.StringUtils;
-
 import com.codeenginestudio.elearning.dto.QuestionOfAssessmentDTO;
 
 public class QuestionValidator {
 
-	private String errContent = "";
-	private String errNumericalOrder = "";
-	private String errCorrectAnswer = "";
+	private String errContent = null;
+	private String errNumericalOrder = null;
+	private String errCorrectAnswer = null;
 
 	public String getErrContent() {
 		return errContent;
@@ -34,47 +33,56 @@ public class QuestionValidator {
 		this.errCorrectAnswer = errCorrectAnswer;
 	}
 
-	String checkNull(String value, String error) {
-		if (value == "") {
-			return error;
-		}
-		return "";
+	public boolean noError() {
+
+		return StringUtils.isEmpty(this.getErrContent()) && StringUtils.isEmpty(this.getErrCorrectAnswer())
+				&& StringUtils.isEmpty(this.getErrNumericalOrder());
 	}
 
-	public QuestionValidator validateQuestion(QuestionOfAssessmentDTO questionOfAssessmentDTO) {
-		QuestionValidator inValid = new QuestionValidator();
+	public static String checkNull(String value, String error) {
 
-		inValid.errContent = checkNull(questionOfAssessmentDTO.getContent(), "Content could not be null");
+		if (StringUtils.isEmpty(value)) {
+			return error;
+		}
+
+		return null;
+	}
+
+	public static QuestionValidator validateQuestion(QuestionOfAssessmentDTO questionOfAssessmentDTO) {
+
+		QuestionValidator inValid = new QuestionValidator();
+		inValid.errContent = checkNull(questionOfAssessmentDTO.getContent(), "content-could-not-be-null");
 		inValid.errNumericalOrder = checkNumericalOrder(questionOfAssessmentDTO.getNumericalorder());
 		inValid.errCorrectAnswer = checkNull(questionOfAssessmentDTO.getCorrectanswer(),
-				"Correct answer could not be null");
+				"correct-answer-could-not-be-null");
 
 		return inValid;
 	}
-	
-	public boolean checkOnlyDigital (String data) {
-		String regex = "\\p{Digit}+";
-		return data.matches(regex);
-	}
-	
-	public String checkNumericalOrder(String numerical) {
-		if(numerical.equals("")) {
-			return "Numerical Order should not be null";
-		}else {
-			if(!checkOnlyDigital(numerical)) {
-				return "Numerical Order should be only digital";
-			}else {
-				if(Integer.parseInt(numerical) <= 0) {
-					return "Numerical Order should be more than 0";
-				}
-			}
-			
-		}
-		return "";
-	}
-	
-	public boolean noError() {
 
-		return StringUtils.isEmpty(this.getErrContent()) && StringUtils.isEmpty(this.getErrCorrectAnswer()) && StringUtils.isEmpty(this.getErrNumericalOrder());
+	public static boolean checkOnlyDigital(String data) {
+
+		return data.matches(REGEX_DIGITAL_FORMAT);
 	}
+
+	public static String checkNumericalOrder(String numerical) {
+
+		if (StringUtils.isEmpty(numerical)) {
+
+			return "numerical-order-should-not-be-null";
+		}
+
+		if (!checkOnlyDigital(numerical)) {
+
+			return "numerical-order-should-be-only-digital";
+		}
+
+		if (Integer.parseInt(numerical) <= 0) {
+
+			return "numerical-order-should-be-more-than-0";
+		}
+
+		return null;
+	}
+
+	private static final String REGEX_DIGITAL_FORMAT = "\\p{Digit}+";
 }

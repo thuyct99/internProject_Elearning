@@ -21,4 +21,6 @@ public interface UserDAO extends JpaRepository<UserEntity, Long> {
 
 	List<UserEntity> getUserByRole(Long roleid);
 
+	List<UserEntity> findByEnabled(Boolean status);
+
 }

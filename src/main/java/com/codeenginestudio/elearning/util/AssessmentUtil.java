@@ -16,6 +16,7 @@ public class AssessmentUtil {
 	public static AssessmentEntity parseToEntity(AssessmentDTO assessmentDTO) {
 
 		AssessmentEntity assessmentEntity = UtilGeneral.modelMapper.map(assessmentDTO, AssessmentEntity.class);
+
 		return assessmentEntity;
 	}
 }

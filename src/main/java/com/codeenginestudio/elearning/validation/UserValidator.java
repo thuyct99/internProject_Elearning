@@ -8,11 +8,14 @@ import com.codeenginestudio.elearning.service.UserService;
 
 public class UserValidator {
 
-	private String errUsername = "";
-	private String errPassword = "";
-	private String errFirstname = "";
-	private String errLastname = "";
-	private String errEmail = "";
+	private static final String SPACE = " ";
+	private static final String REGEX_EMAIL_FORMAT = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+
+	private String errUsername = null;
+	private String errPassword = null;
+	private String errFirstname = null;
+	private String errLastname = null;
+	private String errEmail = null;
 
 	public String getErrUsername() {
 		return errUsername;
@@ -54,83 +57,99 @@ public class UserValidator {
 		this.errEmail = errEmail;
 	}
 
-	String checkUsernameUnique(String username, UserService userService) {
+	public static String checkUsernameUnique(String username, UserService userService) {
 
-		if (username == "") {
-			return "Username could not be null";
-		} else {
-
-			int err = username.indexOf(" ");
-			if (err >= 0) {
-				return "Username could not contains the space";
-			} else if (!CollectionUtils.isEmpty(userService.findByUsername(username))) {
-				return "Username is already exsits !";
-			}
+		if (StringUtils.isEmpty(username)) {
+	
+			return "username-could-not-be-null";
+		} 
+	
+		int err = username.indexOf(SPACE);
+	
+		if (err >= 0) {
+	
+			return "username-could-not-contains-the-space";
+		}
+	
+		if (!CollectionUtils.isEmpty(userService.findByUsername(username))) {
+	
+			return "username-is-already-exsits";
 		}
 
-		return "";
+		return null;
 	}
 
-	String checkEmailUnique(String email, UserService userService) {
+	public static String checkEmailUnique(String email, UserService userService) {
 
-		if (email == "") {
-			return "Email could not be null";
+		if (StringUtils.isEmpty(email)) {
+
+			return "email-could-not-be-null";
+
 		} else if (!isValidEmail(email)) {
-			return "Email is wrong format !";
+
+			return "email-is-wrong-format";
+
 		} else if (!CollectionUtils.isEmpty(userService.findByEmail(email))) {
-			return "Email is already exsits !";
+
+			return "email-is-already-exsits";
 		}
-		return "";
+
+		return null;
 	}
 
-	String checkNull(String value, String error) {
-		if (value == "") {
+	public static String checkNull(String value, String error) {
+
+		if (StringUtils.isEmpty(value)) {
+
 			return error;
 		}
-		return "";
+
+		return null;
 	}
 
-	boolean isValidEmail(String email) {
+	public static boolean isValidEmail(String email) {
 
-		String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
-		return email.matches(regex);
+		return email.matches(REGEX_EMAIL_FORMAT);
 	}
 
-	public UserValidator validateAddUser(UserDTO userDTO, UserService userService) {
+	public static UserValidator validateAddUser(UserDTO userDTO, UserService userService) {
+
 		UserValidator inValid = new UserValidator();
-
 		inValid.errUsername = checkUsernameUnique(userDTO.getUsername(), userService);
-		inValid.errPassword = checkNull(userDTO.getPassword(), "Password could not be null");
-		inValid.errFirstname = checkNull(userDTO.getFirstname(), "Firstname could not be null");
-		inValid.errLastname = checkNull(userDTO.getLastname(), "Lastname could not be null");
+		inValid.errPassword = checkNull(userDTO.getPassword(), "password-could-not-be-null");
+		inValid.errFirstname = checkNull(userDTO.getFirstname(), "firstname-could-not-be-null");
+		inValid.errLastname = checkNull(userDTO.getLastname(), "lastname-could-not-be-null");
 		inValid.errEmail = checkEmailUnique(userDTO.getEmail(), userService);
 
 		return inValid;
 	}
 
-	public UserValidator validateEditUser(UserDTO userDTO, UserService userService, long userId) {
-		UserValidator inValid = new UserValidator();
+	public static UserValidator validateEditUser(UserDTO userDTO, UserService userService, long userId) {
 
+		UserValidator inValid = new UserValidator();
 		UserDTO originUser = userService.getUserByUserId(userId);
 
 		if (!originUser.getUsername().equals(userDTO.getUsername())) {
+
 			inValid.errUsername = checkUsernameUnique(userDTO.getUsername(), userService);
 		}
 
-		inValid.errPassword = checkNull(userDTO.getPassword(), "Password could not be null");
-		inValid.errFirstname = checkNull(userDTO.getFirstname(), "Firstname could not be null");
-		inValid.errLastname = checkNull(userDTO.getLastname(), "Lastname could not be null");
+		inValid.errPassword = checkNull(userDTO.getPassword(), "password-could-not-be-null");
+		inValid.errFirstname = checkNull(userDTO.getFirstname(), "firstname-could-not-be-null");
+		inValid.errLastname = checkNull(userDTO.getLastname(), "lastname-could-not-be-null");
 
 		if (!originUser.getEmail().equals(userDTO.getEmail())) {
+
 			inValid.errEmail = checkEmailUnique(userDTO.getEmail(), userService);
 		}
 
 		return inValid;
 	}
 
-	public boolean noError() {
-		return StringUtils.isEmpty(this.getErrUsername()) && StringUtils.isEmpty(this.getErrPassword())
-				&& StringUtils.isEmpty(this.getErrFirstname()) && StringUtils.isEmpty(this.getErrLastname())
-				&& StringUtils.isEmpty(this.getErrEmail());
+	public static boolean noError(UserValidator inValid) {
+
+		return StringUtils.isEmpty(inValid.getErrUsername()) && StringUtils.isEmpty(inValid.getErrPassword())
+				&& StringUtils.isEmpty(inValid.getErrFirstname()) && StringUtils.isEmpty(inValid.getErrLastname())
+				&& StringUtils.isEmpty(inValid.getErrEmail());
 	}
 }

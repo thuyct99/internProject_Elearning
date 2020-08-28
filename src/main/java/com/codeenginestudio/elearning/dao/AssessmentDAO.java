@@ -13,4 +13,6 @@ public interface AssessmentDAO extends JpaRepository<AssessmentEntity, Long> {
 
 	List<AssessmentEntity> findByClassForeign(ClassEntity classForeign);
 
+	List<AssessmentEntity> findByStatus(Boolean status);
+
 }

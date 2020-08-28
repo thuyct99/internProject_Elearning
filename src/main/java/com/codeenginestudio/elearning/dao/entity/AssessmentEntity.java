@@ -25,7 +25,7 @@ public class AssessmentEntity {
 	@Column
 	private String assessmentname;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "classid", referencedColumnName = "classid")
 	private ClassEntity classForeign;
 

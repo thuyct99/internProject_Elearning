@@ -2,20 +2,22 @@ package com.codeenginestudio.elearning.service;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-
 import com.codeenginestudio.elearning.dto.AssessmentDTO;
 import com.codeenginestudio.elearning.dto.ClassDTO;
 
 public interface AssessmentService {
 
+	void editAssessmentStatus(Long assessmentid);
+
 	void deleteById(Long assessmentid);
+
+	void deleteAssessmentClassid(Long classId);
 
 	void saveAddAssessment(AssessmentDTO assessmentDTO);
 
 	void saveEditAssessment(AssessmentDTO assessmentDTO);
 
-	void editAssessmentStatus(Long assessmentid);
+	List<Long> getAssessmentEnable(boolean status);
 
 	AssessmentDTO getAssessmentByAssessmentid(Long assessmentid);
 
@@ -23,14 +25,12 @@ public interface AssessmentService {
 
 	List<AssessmentDTO> getListAssessment();
 
-	List<AssessmentDTO> getListAssessmentByUnExpired(Long userId);
+	List<AssessmentDTO> getListAssessmentByClassid(Long classid);
 
 	List<AssessmentDTO> getListAssessmentByExpired(Long userId);
 
-	Page<AssessmentDTO> getPageListAssessment(Integer page);
+	List<AssessmentDTO> getListAssessmentByUnExpired(Long userId);
 
 	List<AssessmentDTO> getAssessmentByClassForeign(List<ClassDTO> listClass);
-
-	List<AssessmentDTO> getListAssessmentByClassid(Long classid);
 
 }

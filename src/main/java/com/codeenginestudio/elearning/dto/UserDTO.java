@@ -22,6 +22,12 @@ public class UserDTO {
 
 	private RoleDTO role;
 
+	private Boolean isDelete;
+
+	private int totalAssigned;
+
+	private AssessmentDTO assignmentNotSubmit;
+
 	public UserDTO() {
 
 	}
@@ -38,6 +44,22 @@ public class UserDTO {
 		this.avartar = avartar;
 		this.enabled = enabled;
 		this.role = role;
+	}
+
+	public int getTotalAssigned() {
+		return totalAssigned;
+	}
+
+	public void setTotalAssigned(int totalAssigned) {
+		this.totalAssigned = totalAssigned;
+	}
+
+	public Boolean getIsDelete() {
+		return isDelete;
+	}
+
+	public void setIsDelete(Boolean isDelete) {
+		this.isDelete = isDelete;
 	}
 
 	public Long getUserid() {
@@ -122,6 +144,14 @@ public class UserDTO {
 
 	public Boolean getEnabled() {
 		return enabled;
+	}
+
+	public AssessmentDTO getAssignmentNotSubmit() {
+		return assignmentNotSubmit;
+	}
+
+	public void setAssignmentNotSubmit(AssessmentDTO assignmentNotSubmit) {
+		this.assignmentNotSubmit = assignmentNotSubmit;
 	}
 
 }

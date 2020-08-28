@@ -23,9 +23,12 @@ public class RoleServiceImpl implements RoleService {
 
 		List<RoleEntity> listRoleEntity = roleDAO.findAll();
 		List<RoleDTO> listRoleDTO = new ArrayList<>();
+
 		for (RoleEntity roleEntity : listRoleEntity) {
+
 			listRoleDTO.add(RoleUtil.parseToRoleDTO(roleEntity));
 		}
+
 		return listRoleDTO;
 	}
 
@@ -33,6 +36,7 @@ public class RoleServiceImpl implements RoleService {
 	public Long getRoleIdByRolename(String rolename) {
 
 		RoleDTO roleDTO = RoleUtil.parseToRoleDTO(roleDAO.getRoleIdByRolename(rolename));
+
 		return roleDTO.getRoleid();
 	}
 

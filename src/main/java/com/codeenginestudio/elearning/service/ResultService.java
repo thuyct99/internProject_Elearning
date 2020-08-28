@@ -7,22 +7,28 @@ import com.codeenginestudio.elearning.dto.UserDTO;
 
 public interface ResultService {
 
-	void saveSubmitLesson(ResultDTO lesson);
+	void deleteResultByAssessmentId(Long assessmentid);
 
-	void saveEditSubmitLesson(ResultDTO lesson);
+	void deleteResultByStudent(Long studentId);
+
+	void deleteResultByQuestionId(Long questionId);
+
+	void saveEditSubmitResult(ResultDTO result);
+
+	void saveSubmitResult(ResultDTO result);
 
 	Float getUserScoreByAssessment(Long assessmentid);
 
+	List<Long> getListAssessmentIdByStudentId(Long studentid);
+
 	List<Long> getListStudentIdtByAssessmentId(Long assessmentid);
 
-	List<Long> getListAssessmentIdByStudentId(Long studentid);
+	List<UserDTO> getListStudentNotyetSubmitAssessment();
 
 	List<ResultDTO> findByAssessmentId(Long assessmentid);
 
-	List<ResultDTO> findByStudentId(Long studentid);
-
 	List<ResultDTO> findByAssessmentAndStudent(Long assessmentid, Long userId);
 
-	List<UserDTO> getListStudentNotyetSubmitAssessment();
+	List<ResultDTO> findByStudentId(Long studentid);
 
 }

@@ -29,9 +29,6 @@ public class ResultController {
 	private AssessmentService assessmentService;
 
 	@Autowired
-	private ResultService resultService;
-
-	@Autowired
 	private ClassService classService;
 
 	@Autowired
@@ -40,17 +37,20 @@ public class ResultController {
 	@Autowired
 	private QuestionOfAssessmentService questionOfAssessmentService;
 
+	@Autowired
+	private ResultService resultService;
+
 	// Student role
 
 	@GetMapping("/student/assessment/history/viewResult/{assessmentid}")
 	public String getResultWithStudentRole(Model model, @PathVariable(name = "assessmentid") Long assessmentid) {
 
 		Long userId = SecurityUtil.getUserPrincipal().getUserid();
+		List<ResultDTO> resultDTO = resultService.findByAssessmentAndStudent(assessmentid, userId);
+
 		model.addAttribute("listQuestionOfAssessment",
 				questionOfAssessmentService.getListQuestionOfAssessmentByAssessment(assessmentid));
 		model.addAttribute("assessment", assessmentService.getAssessmentByAssessmentid(assessmentid));
-
-		List<ResultDTO> resultDTO = resultService.findByAssessmentAndStudent(assessmentid, userId);
 		model.addAttribute("listResult", resultDTO);
 		model.addAttribute("urlBack", "/student/assessment/history");
 
@@ -60,7 +60,7 @@ public class ResultController {
 	// role Teacher
 
 	@GetMapping("/teacher/viewResultOfStudent/{assessmentid}/{userid}")
-	public String showStudentResult(Model model, @PathVariable(name = "assessmentid") Long assessmentid,
+	public String getResultWithTeacherRole(Model model, @PathVariable(name = "assessmentid") Long assessmentid,
 			@PathVariable(name = "userid") Long userid) {
 
 		model.addAttribute("listQuestionOfAssessment",
@@ -68,11 +68,12 @@ public class ResultController {
 		model.addAttribute("assessment", assessmentService.getAssessmentByAssessmentid(assessmentid));
 		model.addAttribute("listResult", resultService.findByAssessmentAndStudent(assessmentid, userid));
 		model.addAttribute("urlBack", "/teacher/viewResult?assessmentid=" + assessmentid);
+
 		return PREFIX_STUDENT + "history/viewResultAssessment";
 	}
 
 	@GetMapping("/teacher/viewResult")
-	public String showListStudentCompletedTheTest(Model model, @ModelAttribute("assessmentid") Long assessmentid) {
+	public String getListStudentCompletedTheTest(Model model, @ModelAttribute("assessmentid") Long assessmentid) {
 
 		AssessmentDTO assessment = assessmentService.getAssessmentByAssessmentid(assessmentid);
 		ClassDTO classDTO = classService.getClassByClassid(assessment.getClassForeign().getClassid());
@@ -80,6 +81,7 @@ public class ResultController {
 		List<StudentInClassDTO> listStudentsInclass = studentInClassService.getByClassid(classDTO.getClassid());
 
 		for (StudentInClassDTO studentInClassDTO : listStudentsInclass) {
+
 			studentInClassDTO.setScore(
 					studentInClassService.setScoreForStudent(assessmentid, studentInClassDTO.getStudent().getUserid()));
 		}

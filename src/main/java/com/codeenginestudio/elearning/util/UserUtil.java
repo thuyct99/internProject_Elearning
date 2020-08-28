@@ -11,6 +11,7 @@ public class UserUtil {
 		UserDTO userDTO = UtilGeneral.modelMapper.map(userEntity, UserDTO.class);
 
 		if (userEntity.getRole() != null) {
+
 			userDTO.setRole(RoleUtil.parseToRoleDTO(userEntity.getRole()));
 		}
 
@@ -22,6 +23,7 @@ public class UserUtil {
 		UserEntity userEntity = UtilGeneral.modelMapper.map(userDTO, UserEntity.class);
 
 		if (userDTO.getRole() != null) {
+
 			userEntity.setRole(RoleUtil.parseToRoleEntity(userDTO.getRole()));
 		}
 

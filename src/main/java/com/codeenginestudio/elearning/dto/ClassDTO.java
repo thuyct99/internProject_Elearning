@@ -14,6 +14,8 @@ public class ClassDTO {
 
 	private int totalAssessments;
 
+	private Boolean isDelete;
+
 	public ClassDTO() {
 		super();
 	}
@@ -25,6 +27,14 @@ public class ClassDTO {
 		this.totalStudents = totalStudents;
 		this.status = status;
 		this.user = user;
+	}
+
+	public Boolean getIsDelete() {
+		return isDelete;
+	}
+
+	public void setIsDelete(Boolean isDelete) {
+		this.isDelete = isDelete;
 	}
 
 	public Long getClassid() {

@@ -5,6 +5,7 @@ import com.codeenginestudio.elearning.dto.ClassDTO;
 import com.codeenginestudio.elearning.util.general.UtilGeneral;
 
 public class ClassUtil {
+
 	public static ClassDTO parseToDTO(ClassEntity classEntity) {
 
 		ClassDTO classDTO = UtilGeneral.modelMapper.map(classEntity, ClassDTO.class);

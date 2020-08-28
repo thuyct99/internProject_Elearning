@@ -31,6 +31,10 @@ public class MyUserDetailsService implements UserDetailsService {
 		if (user == null) {
 			throw new UsernameNotFoundException("Can not found user");
 		}
+		// if user is disabled user can not login
+		if (!user.isEnabled()) {
+			throw new UsernameNotFoundException("Your account is disabled");
+		}
 
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		authorities.add(new SimpleGrantedAuthority(RoleConstant.DEFAULT_ROLE));
